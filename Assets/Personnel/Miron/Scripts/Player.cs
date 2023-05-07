@@ -293,8 +293,14 @@ public class Player : MonoBehaviour
 		Invoke("SwitchAnimationBools", animationSwitchTime);
 	}
 
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        Vector2 look = context.ReadValue<Vector2>();
+        transform.rotation = Quaternion.LookRotation(new Vector3(look.x, 0, look.y));
+    }
 
-	public void OnPush(InputAction.CallbackContext context)
+
+        public void OnPush(InputAction.CallbackContext context)
     {
         if (context.performed && state != State.DEAD)
         {
@@ -352,11 +358,11 @@ public class Player : MonoBehaviour
 		Vector3 movementXZ = movement;
 		movementXZ.y = 0;
 
-        if (model != null && !followMouse.enabled)
-        {
-            Quaternion lookAt = Quaternion.LookRotation(movementXZ);
-            model.transform.rotation = Quaternion.Lerp(model.transform.rotation, lookAt, smoothRotation);
-        }
+        //if (model != null && !followMouse.enabled)
+        //{
+        //    Quaternion lookAt = Quaternion.LookRotation(movementXZ);
+        //    model.transform.rotation = Quaternion.Lerp(model.transform.rotation, lookAt, smoothRotation);
+        //}
 
         if (movementXZ.magnitude >= controller.minMoveDistance)
         {
